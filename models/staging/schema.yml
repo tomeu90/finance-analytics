@@ -1,0 +1,236 @@
+version: 2
+
+sources:
+  - name: db_landing
+    description: "Raw source data ingested from external financial data providers. This layer serves as the foundational input for downstream transformations."
+    database: finance_catalog
+    tables:
+
+      - name: src_raw_djia_index
+        description: "Constituent data for companies in the Dow Jones Industrial Average (DJIA) index."
+        columns:
+          - name: company
+            data_type: string
+            description: "The full name of the company included in the DJIA index."
+          - name: exchange
+            data_type: string
+            description: "Stock exchange where the company's stock is traded (e.g., NYSE, NASDAQ)."
+          - name: symbol
+            data_type: string
+            description: "Ticker symbol used to represent the company on the exchange."
+          - name: industry
+            data_type: string
+            description: "Industry category of the company."
+          - name: date_added
+            data_type: string
+            description: "Date when the company was added to the DJIA index."
+          - name: notes
+            data_type: string
+            description: "Additional notes or comments about the company."
+          - name: index_weighting
+            data_type: string
+            description: "Weighting of the company within the DJIA index."
+
+      - name: src_raw_holidays
+        description: "List of market holidays which may affect trading schedules."
+        columns:
+          - name: date
+            data_type: string
+            description: "Date of the market holiday."
+          - name: holiday
+            data_type: string
+            description: "Name of the holiday."
+
+      - name: src_raw_index_keys
+        description: "Reference table mapping companies to identifiers and exchanges."
+        columns:
+          - name: cik
+            data_type: string
+            description: "Central Index Key (CIK) assigned by the SEC to the entity."
+          - name: ticker
+            data_type: string
+            description: "Stock ticker symbol."
+          - name: name
+            data_type: string
+            description: "Legal name of the company."
+          - name: exchange
+            data_type: string
+            description: "Stock exchange where the ticker is listed."
+          - name: sic
+            data_type: string
+            description: "Standard Industrial Classification (SIC) code for the company."
+
+      - name: src_raw_insiders_trx
+        description: "Insider trading transactions reported by company executives or major shareholders."
+        columns:
+          - name: filing
+            data_type: string
+            description: "Filing date for the insider transaction report."
+          - name: symbol
+            data_type: string
+            description: "Ticker symbol for the traded security."
+          - name: security
+            data_type: string
+            description: "Name of the security being transacted."
+          - name: reporting_name
+            data_type: string
+            description: "Name of the individual reporting the transaction."
+          - name: relationship
+            data_type: string
+            description: "Relationship of the individual to the company (e.g., Officer, Director)."
+          - name: trans_date
+            data_type: string
+            description: "Date when the transaction occurred."
+          - name: purchase_sale
+            data_type: string
+            description: "Indicator for type of transaction: 'Purchase' or 'Sale'."
+          - name: shares
+            data_type: double
+            description: "Number of shares involved in the transaction."
+          - name: price
+            data_type: double
+            description: "Price per share at the time of the transaction."
+          - name: amount
+            data_type: double
+            description: "Total dollar amount of the transaction."
+          - name: d_i
+            data_type: string
+            description: "Indicates whether the transaction is Direct (D) or Indirect (I)."
+
+      - name: src_raw_nasdaq_index
+        description: "Constituents of the NASDAQ index with sector classification."
+        columns:
+          - name: ticker
+            data_type: string
+            description: "Ticker symbol of the company."
+          - name: company
+            data_type: string
+            description: "Name of the company."
+          - name: gics_sector
+            data_type: string
+            description: "Global Industry Classification Standard (GICS) sector."
+          - name: gics_sub_industry
+            data_type: string
+            description: "GICS sub-industry category."
+
+      - name: src_raw_russell_index
+        description: "Constituents of the Russell index with sector and sub-industry classification."
+        columns:
+          - name: company
+            data_type: string
+            description: "Name of the company in the index."
+          - name: symbol
+            data_type: string
+            description: "Ticker symbol representing the company."
+          - name: gics_sector
+            data_type: string
+            description: "GICS sector of the company."
+          - name: gics_sub_industry
+            data_type: string
+            description: "GICS sub-industry classification."
+
+      - name: src_raw_sic_codes
+        description: "Reference table for Standard Industrial Classification (SIC) codes and industry descriptions."
+        columns:
+          - name: sic_code
+            data_type: bigint
+            description: "Standard Industrial Classification (SIC) code."
+          - name: office
+            data_type: string
+            description: "Associated office or agency maintaining the classification."
+          - name: industry_title
+            data_type: string
+            description: "Name or description of the industry."
+
+      - name: src_raw_sp_index
+        description: "Constituents of the S&P index with associated company metadata."
+        columns:
+          - name: symbol
+            data_type: string
+            description: "Ticker symbol of the company."
+          - name: security
+            data_type: string
+            description: "Name of the security listed in the index."
+          - name: gics_sector
+            data_type: string
+            description: "GICS sector classification."
+          - name: gics_sub_industry
+            data_type: string
+            description: "GICS sub-industry classification."
+          - name: headquarters_location
+            data_type: string
+            description: "City and state where the company is headquartered."
+          - name: date_added
+            data_type: string
+            description: "Date the company was added to the index."
+          - name: cik
+            data_type: bigint
+            description: "SEC Central Index Key (CIK) for the company."
+          - name: founded
+            data_type: string
+            description: "Year the company was founded."
+
+      - name: src_raw_stock_prices
+        description: "Historical daily stock prices for multiple tickers."
+        columns:
+          - name: id
+            data_type: string
+            description: "Unique identifier for the price record."
+          - name: date
+            data_type: timestamp
+            description: "Date of the stock price record."
+          - name: close
+            data_type: double
+            description: "Closing price for the trading day."
+          - name: high
+            data_type: double
+            description: "Highest price during the trading day."
+          - name: low
+            data_type: double
+            description: "Lowest price during the trading day."
+          - name: open
+            data_type: double
+            description: "Opening price for the trading day."
+          - name: volume
+            data_type: double
+            description: "Total number of shares traded on the date."
+          - name: ticker
+            data_type: string
+            description: "Ticker symbol for the stock."
+          - name: adj_close
+            data_type: double
+            description: "Adjusted closing price after accounting for splits and dividends."
+
+      - name: src_raw_time
+        description: "Date dimension table for time-based analysis and joins."
+        columns:
+          - name: date
+            data_type: timestamp
+            description: "Calendar date."
+          - name: year
+            data_type: bigint
+            description: "Year component of the date."
+          - name: month
+            data_type: bigint
+            description: "Month number (1-12)."
+          - name: month_name
+            data_type: string
+            description: "Full name of the month."
+          - name: day
+            data_type: bigint
+            description: "Day of the month."
+          - name: day_of_week
+            data_type: bigint
+            description: "Day of the week as a number (e.g., 1 = Sunday)."
+          - name: weekday_name
+            data_type: string
+            description: "Name of the weekday (e.g., Monday)."
+          - name: is_weekend
+            data_type: boolean
+            description: "Boolean indicating whether the date falls on a weekend."
+          - name: week
+            data_type: int
+            description: "Week number of the year."
+          - name: quarter
+            data_type: bigint
+            description: "Quarter of the year (1–4)."

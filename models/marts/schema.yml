@@ -1,0 +1,294 @@
+version: 2
+
+models:
+  - name: dim_gold__industries
+    description: >
+      Dimension table of industries based on SIC codes. Includes a default 'NOT CLASSIFIED'
+      record for unmatched SIC codes.
+    columns:
+      - name: code_sic
+        description: Standard Industrial Classification code.
+        tests:
+          - not_null
+          - unique
+
+      - name: desc_office
+        description: Name of the regional SEC office.
+        tests:
+          - not_null
+
+      - name: desc_industry
+        description: Industry title associated with the SIC code.
+        tests:
+          - not_null
+          - unique
+
+      - name: created_at
+        description: Timestamp indicating when the record was loaded.
+
+  - name: dim_gold__index_components
+    description: >
+      Dimension table containing stock symbols and their associated market indices (SP500, NASDAQ100, DJIA, RUSSELL1000).
+      Derived from multiple staging tables.
+    columns:
+      - name: code_symbol
+        description: Stock ticker symbol.
+        tests:
+          - not_null
+
+      - name: desc_index
+        description: The index to which the symbol belongs (e.g., SP500, NASDAQ100).
+        tests:
+          - not_null
+
+      - name: created_at
+        description: Timestamp when the record was created.
+
+  - name: dim_gold__securities
+    description: >
+      Dimension table of securities, enriched with index membership and SIC classification.
+    columns:
+      - name: id_cik
+        description: Central Index Key of the company.
+        tests:
+          - not_null
+
+      - name: code_symbol
+        description: Stock ticker symbol.
+        tests:
+          - not_null
+
+      - name: desc_security
+        description: Name or description of the security.
+        tests:
+          - not_null
+
+      - name: desc_exchange
+        description: Exchange where the security is listed.
+        tests:
+          - not_null
+
+      - name: is_sp_index
+        description: Flag indicating S&P 500 index membership.
+        tests:
+          - not_null
+
+      - name: is_nasdaq_index
+        description: Flag indicating NASDAQ 100 index membership.
+        tests:
+          - not_null
+
+      - name: is_djia_index
+        description: Flag indicating DJIA index membership.
+        tests:
+          - not_null
+
+      - name: is_russell_index
+        description: Flag indicating Russell 1000 index membership.
+        tests:
+          - not_null
+
+      - name: code_sic
+        description: SIC code associated with the security.
+        tests:
+          - not_null
+
+      - name: created_at
+        description: Timestamp indicating when the record was loaded.
+
+    data_tests:
+      - unique_combination:
+          combination: ['id_cik', 'code_symbol']
+
+  - name: dim_gold__time
+    description: >
+      Time dimension table enriched with calendar, holiday, and market open/close information.
+    columns:
+      - name: date
+        description: Calendar date (primary key).
+        tests:
+          - not_null
+          - unique
+
+      - name: date_year
+        description: Year component of the date.
+        tests:
+          - not_null
+
+      - name: date_month
+        description: Month number.
+        tests:
+          - not_null
+
+      - name: desc_month
+        description: Month name.
+        tests:
+          - not_null
+
+      - name: date_day
+        description: Day of the month.
+        tests:
+          - not_null
+
+      - name: date_weekday
+        description: Day of the week as a number.
+        tests:
+          - not_null
+
+      - name: desc_weekday
+        description: Name of the weekday.
+        tests:
+          - not_null
+
+      - name: is_weekend
+        description: Indicates if the date falls on a weekend.
+        tests:
+          - not_null
+
+      - name: is_holiday
+        description: Indicates if the date is a holiday.
+        tests:
+          - not_null
+
+      - name: desc_holiday
+        description: Name of the holiday (if applicable).
+        tests:
+          - not_null
+
+      - name: is_market_open
+        description: Indicates if the market was open (1) or closed (0).
+        tests:
+          - not_null
+
+      - name: date_week
+        description: ISO week number.
+        tests:
+          - not_null
+
+      - name: date_quarter
+        description: Quarter of the year.
+        tests:
+          - not_null
+          
+      - name: created_at
+        description: Timestamp indicating when the record was loaded.
+
+  - name: fct_gold__insiders_trx
+    description: >
+      Fact table containing insider transactions, including purchase/sale flags,
+      share amounts, transaction amounts, and balances over time.
+    columns:
+      - name: date_filing
+        description: Date the transaction was filed.
+        tests:
+          - not_null
+
+      - name: id_cik
+        description: CIK of the insider/company.
+        tests:
+          - not_null
+
+      - name: desc_reporting_name
+        description: Name of the reporting insider.
+        tests:
+          - not_null
+
+      - name: desc_relationship
+        description: Insider's relationship to the company.
+        tests:
+          - not_null
+
+      - name: date_transaction
+        description: Actual date of the transaction.
+        tests:
+          - not_null
+
+      - name: is_purchase
+        description: Flag indicating if the transaction was a purchase (1) or sale (0).
+        tests:
+          - not_null
+
+      - name: amt_shares
+        description: Number of shares transacted.
+        tests:
+          - not_null
+
+      - name: amt_signed_shares
+        description: Signed shares (negative for sales).
+        tests:
+          - not_null
+
+      - name: amt_shares_balance
+        description: Running balance of shares transacted by insider (From June 2023).
+        tests:
+          - not_null
+
+      - name: price_share
+        description: Price per share at the time of transaction.
+        tests:
+          - not_null
+
+      - name: amt_transaction
+        description: Total transaction amount.
+        tests:
+          - not_null
+
+      - name: amt_signed_transaction
+        description: Signed transaction amount (negative for sales).
+        tests:
+          - not_null
+
+      - name: amt_transaction_balance
+        description: Running balance of signed transaction amounts (From June 2023).
+        tests:
+          - not_null
+
+      - name: is_owner
+        description: Indicates if the filer is a direct owner.
+        tests:
+          - not_null
+
+      - name: created_at
+        description: Timestamp when the record was created.
+
+  - name: fct_gold__security_prices
+    description: >
+      Fact table of daily security price and volume data, enriched with symbol-to-CIK mapping.
+    columns:
+      - name: id_cik
+        description: Central Index Key of the company.
+        tests:
+          - not_null
+
+      - name: date_session
+        description: Trading session date.
+        tests:
+          - not_null
+
+      - name: price_close
+        description: Adjusted or raw closing price.
+        tests:
+          - not_null
+
+      - name: price_high
+        description: High price during the session.
+        tests:
+          - not_null
+
+      - name: price_low
+        description: Low price during the session.
+        tests:
+          - not_null
+
+      - name: price_open
+        description: Opening price of the session.
+        tests:
+          - not_null
+
+      - name: amt_volume
+        description: Volume of shares traded.
+        tests:
+          - not_null
+
+      - name: created_at
+        description: Timestamp indicating when the record was loaded.

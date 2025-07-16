@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: int_silver__index_components
+    description: >
+      Intermediate model that consolidates index membership for symbols across
+      SP500, NASDAQ100, DJIA, and RUSSELL1000 indices. Outputs one row per symbol
+      with flags indicating index membership.
+    columns:
+      - name: code_symbol
+        description: The stock symbol or ticker.
+
+      - name: is_sp_index
+        description: Flag indicating whether the symbol is part of the S&P 500 index (1 = Yes, 0 = No).
+
+      - name: is_djia_index
+        description: Flag indicating whether the symbol is part of the Dow Jones Industrial Average (DJIA) index (1 = Yes, 0 = No).
+
+      - name: is_nasdaq_index
+        description: Flag indicating whether the symbol is part of the NASDAQ 100 index (1 = Yes, 0 = No).
+
+      - name: is_russell_index
+        description: Flag indicating whether the symbol is part of the Russell 1000 index (1 = Yes, 0 = No).

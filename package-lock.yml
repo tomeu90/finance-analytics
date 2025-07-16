@@ -1,0 +1,11 @@
+packages:
+  - name: codegen
+    package: dbt-labs/codegen
+    version: 0.13.1
+  - name: dbt_utils
+    package: dbt-labs/dbt_utils
+    version: 1.3.0
+  - name: spark_utils
+    package: dbt-labs/spark_utils
+    version: 0.3.0
+sha1_hash: ea62eeb65efa1f016b3f05a7a44d9402e4c472d9
