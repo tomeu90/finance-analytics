@@ -4,7 +4,7 @@
 
 Este proyecto implementa un pipeline de datos en **Databricks**, diseñado para procesar y modelar datos relacionados con transacciones de insiders y precios de activos financieros. La solución sigue una arquitectura **Medallion** y utiliza **dbt** para la modelación en capas, finalizando con la visualización de los datos en un dashboard en **Power BI**.
 
-![Dashboard](https://i.imgur.com/MwP0ve5.png)
+![Dashboard de transacciones](https://i.imgur.com/b0CsKrO.png)
 
 ---
 
@@ -22,7 +22,7 @@ Este proyecto implementa un pipeline de datos en **Databricks**, diseñado para 
 
 ### A. 'medallion_layer' (Carga días laborales)
 
-![Orquestación de la carga diaria](https://imgur.com/Hzx4PRz)
+![Orquestación de la carga diaria](https://i.imgur.com/Hzx4PRz.png)
 
 #### 1. 'trg_holidays.py' (Trigger inicial)
 Verifica si el día actual es festivo:
@@ -58,7 +58,7 @@ Los datos se almacenan en **db_landing** (zona cruda).
 
 ### B. 'time_layer' (Carga anual)
 
-![Orquestación de la capa tiempo anual](https://imgur.com/knJjoPy)
+![Orquestación de la capa tiempo anual](https://i.imgur.com/knJjoPy.png)
 
 Este flujo se ejecuta **una vez al año**:
 - Inserta los **días festivos del nuevo año**.
