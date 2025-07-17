@@ -4,7 +4,7 @@
 
 Este proyecto implementa un pipeline de datos en **Databricks**, diseñado para procesar y modelar datos relacionados con transacciones de insiders y precios de activos financieros. La solución sigue una arquitectura **Medallion** y utiliza **dbt** para la modelación en capas, finalizando con la visualización de los datos en un dashboard en **Power BI**.
 
-![Dashboard de transacciones y cotizaciones de activos]([https://imgur.com/MwP0ve5](https://imgur.com/MwP0ve5))
+![Dashboard](https://i.imgur.com/MwP0ve5.png)
 
 ---
 
