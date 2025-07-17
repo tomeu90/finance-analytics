@@ -71,51 +71,54 @@ Este flujo se ejecuta **una vez al año**:
 
 ## 📁 Estructura del Repositorio
 
+## 📁 Estructura del Repositorio
+
+```text
 .
-├── dbt/
-│   ├── dbt_project.yml
-│   ├── macros/
-│   │   └── tests/
-│   │       └── unique_combination.sql
-│   ├── models/
-│   │   ├── intermediate/
-│   │   │   ├── int_silver_index_components.sql
-│   │   │   └── schema.yml
-│   │   ├── marts/
-│   │   │   ├── dim_gold_index_components.sql
-│   │   │   ├── dim_gold_industries.sql
-│   │   │   ├── dim_gold_securities.sql
-│   │   │   ├── dim_gold_time.sql
-│   │   │   ├── fct_gold_insiders_trx.sql
-│   │   │   ├── fct_gold_security_prices.sql
-│   │   │   └── schema.yml
-│   │   ├── staging/
-│   │   │   ├── schema.yml
-│   │   │   ├── stg_bronze_djia_index.sql
-│   │   │   ├── stg_bronze_holidays.sql
-│   │   │   ├── stg_bronze_index_keys.sql
-│   │   │   ├── stg_bronze_insiders_trx.sql
-│   │   │   ├── stg_bronze_nasdaq_index.sql
-│   │   │   ├── stg_bronze_russell_index.sql
-│   │   │   ├── stg_bronze_sic_codes.sql
-│   │   │   ├── stg_bronze_sp_index.sql
-│   │   │   ├── stg_bronze_stock_prices.sql
-│   │   │   └── stg_bronze_time.sql
-│   └── tests/
-├── jobs/
-│   ├── medallion_layer.py
-│   └── time_layer.py
-├── sources/
-│   ├── src_ingest_raw_holidays.ipynb
-│   ├── src_ingest_raw_index_keys.ipynb
-│   ├── src_ingest_raw_index_lists.ipynb
-│   ├── src_ingest_raw_insiders_trx.ipynb
-│   ├── src_ingest_raw_prices_01.ipynb
-│   ├── src_ingest_raw_prices_02.ipynb
-│   ├── src_ingest_raw_sic_codes.ipynb
-│   └── src_ingest_raw_time.ipynb
-├── utils/
-│   └── trg_holidays.py
-├── packages.yml
-├── package-lock.yml
-└── README.md
+- dbt/
+  - dbt_project.yml
+  - macros/
+    - tests/
+      - unique_combination.sql
+  - models/
+    - intermediate/
+      - int_silver_index_components.sql
+      - schema.yml
+    - marts/
+      - dim_gold_index_components.sql
+      - dim_gold_industries.sql
+      - dim_gold_securities.sql
+      - dim_gold_time.sql
+      - fct_gold_insiders_trx.sql
+      - fct_gold_security_prices.sql
+      - schema.yml
+    - staging/
+      - schema.yml
+      - stg_bronze_djia_index.sql
+      - stg_bronze_holidays.sql
+      - stg_bronze_index_keys.sql
+      - stg_bronze_insiders_trx.sql
+      - stg_bronze_nasdaq_index.sql
+      - stg_bronze_russell_index.sql
+      - stg_bronze_sic_codes.sql
+      - stg_bronze_sp_index.sql
+      - stg_bronze_stock_prices.sql
+      - stg_bronze_time.sql
+  - tests/
+- jobs/
+  - medallion_layer.py
+  - time_layer.py
+- sources/
+  - src_ingest_raw_holidays.ipynb
+  - src_ingest_raw_index_keys.ipynb
+  - src_ingest_raw_index_lists.ipynb
+  - src_ingest_raw_insiders_trx.ipynb
+  - src_ingest_raw_prices_01.ipynb
+  - src_ingest_raw_prices_02.ipynb
+  - src_ingest_raw_sic_codes.ipynb
+  - src_ingest_raw_time.ipynb
+- utils/
+  - trg_holidays.py
+- packages.yml
+- package-lock.yml
+- README.md
