@@ -39,5 +39,5 @@ time_layer = Job.from_dict(
 from databricks.sdk import WorkspaceClient
 
 w = WorkspaceClient()
-w.jobs.reset(new_settings=time_layer, job_id=53661287662690)
+w.jobs.reset(new_settings=time_layer, job_id=id)
 # or create a new job using: w.jobs.create(**time_layer.as_shallow_dict())
