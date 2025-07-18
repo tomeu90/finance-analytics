@@ -33,7 +33,6 @@ Verifica si el día actual es festivo:
 Contiene notebooks de Databricks que conectan con diversas fuentes para obtener:
 - Transacciones de insiders
 - Precios históricos de activos
-- Días festivos
 - Códigos SIC
 - Listas de índices
 - Activos registrados en la SEC
@@ -111,8 +110,7 @@ Este flujo se ejecuta **una vez al año**:
 │   ├── src_ingest_raw_index_keys.ipynb
 │   ├── src_ingest_raw_index_lists.ipynb
 │   ├── src_ingest_raw_insiders_trx.ipynb
-│   ├── src_ingest_raw_prices_01.ipynb
-│   ├── src_ingest_raw_prices_02.ipynb
+│   ├── src_ingest_raw_prices.ipynb
 │   ├── src_ingest_raw_sic_codes.ipynb
 │   └── src_ingest_raw_time.ipynb
 ├── utils/
