@@ -59,26 +59,14 @@ medallion_layer = Job.from_dict(
                 },
             },
             {
-                "task_key": "ingest_raw_prices_01",
+                "task_key": "ingest_raw_prices",
                 "depends_on": [
                     {
                         "task_key": "ingest_raw_index_keys",
                     },
                 ],
                 "notebook_task": {
-                    "notebook_path": "/Workspace/finance-analytics/sources/src_ingest_raw_prices_01",
-                    "source": "WORKSPACE",
-                },
-            },
-            {
-                "task_key": "ingest_raw_prices_02",
-                "depends_on": [
-                    {
-                        "task_key": "ingest_raw_index_keys",
-                    },
-                ],
-                "notebook_task": {
-                    "notebook_path": "/Workspace/finance-analytics/sources/src_ingest_raw_prices_02",
+                    "notebook_path": "/Workspace/finance-analytics/sources/src_ingest_raw_prices",
                     "source": "WORKSPACE",
                 },
             },
@@ -101,10 +89,13 @@ medallion_layer = Job.from_dict(
                         "task_key": "ingest_insiders_trx",
                     },
                     {
-                        "task_key": "ingest_raw_prices_01",
+                        "task_key": "ingest_raw_prices",
                     },
                     {
-                        "task_key": "ingest_raw_prices_02",
+                        "task_key": "ingest_raw_sic_codes",
+                    },
+                    {
+                        "task_key": "ingest_raw_index_components",
                     },
                 ],
                 "dbt_task": {
@@ -113,7 +104,8 @@ medallion_layer = Job.from_dict(
                         "dbt deps",
                         "dbt build",
                     ],
-                    "warehouse_id": "",
+                    "schema": "db",
+                    "warehouse_id": "wh_id",
                     "catalog": "finance_catalog",
                     "source": "GIT",
                 },
@@ -152,5 +144,5 @@ medallion_layer = Job.from_dict(
 from databricks.sdk import WorkspaceClient
 
 w = WorkspaceClient()
-w.jobs.reset(new_settings=medallion_layer, job_id=905255200751825)
+w.jobs.reset(new_settings=medallion_layer, job_id=id)
 # or create a new job using: w.jobs.create(**medallion_layer.as_shallow_dict())
