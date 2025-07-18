@@ -22,7 +22,7 @@ Este proyecto implementa un pipeline de datos en **Databricks**, diseñado para 
 
 ### A. 'medallion_layer' (Carga días laborales)
 
-![Orquestación de la carga diaria](https://i.imgur.com/Hzx4PRz.png)
+![Orquestación de la carga diaria](https://i.imgur.com/mXzHycL.png)
 
 #### 1. 'trg_holidays.py' (Trigger inicial)
 Verifica si el día actual es festivo:
